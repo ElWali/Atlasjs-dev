@@ -5446,50 +5446,6 @@
   var imageOverlay = function (url, bounds, options) {
 	return new ImageOverlay(url, bounds, options);
   };
-  var VideoOverlay = ImageOverlay.extend({
-	options: {
-		autoplay: true,
-		loop: true,
-		keepAspectRatio: true,
-		muted: false,
-		playsInline: true
-	},
-	_initImage: function () {
-		var wasElementSupplied = this._url.tagName === 'VIDEO';
-		var vid = this._image = wasElementSupplied ? this._url : create$1('video');
-		addClass(vid, 'atlas-image-layer');
-		if (this._zoomAnimated) { addClass(vid, 'atlas-zoom-animated'); }
-		if (this.options.className) { addClass(vid, this.options.className); }
-		vid.onselectstart = falseFn;
-		vid.onmousemove = falseFn;
-		vid.onloadeddata = bind(this.fire, this, 'load');
-		if (wasElementSupplied) {
-			var sourceElements = vid.getElementsByTagName('source');
-			var sources = [];
-			for (var j = 0; j < sourceElements.length; j++) {
-				sources.push(sourceElements[j].src);
-			}
-			this._url = (sourceElements.length > 0) ? sources : [vid.src];
-			return;
-		}
-		if (!isArray(this._url)) { this._url = [this._url]; }
-		if (!this.options.keepAspectRatio && Object.prototype.hasOwnProperty.call(vid.style, 'objectFit')) {
-			vid.style['objectFit'] = 'fill';
-		}
-		vid.autoplay = !!this.options.autoplay;
-		vid.loop = !!this.options.loop;
-		vid.muted = !!this.options.muted;
-		vid.playsInline = !!this.options.playsInline;
-		for (var i = 0; i < this._url.length; i++) {
-			var source = create$1('source');
-			source.src = this._url[i];
-			vid.appendChild(source);
-		}
-	}
-  });
-  function videoOverlay(video, bounds, options) {
-	return new VideoOverlay(video, bounds, options);
-  }
   var SVGOverlay = ImageOverlay.extend({
 	_initImage: function () {
 		var el = this._image = this._url;
@@ -8356,7 +8312,6 @@
   exports.Tooltip = Tooltip;
   exports.Transformation = Transformation;
   exports.Util = Util;
-  exports.VideoOverlay = VideoOverlay;
   exports.bind = bind;
   exports.bounds = toBounds;
   exports.canvas = canvas;
@@ -8389,7 +8344,6 @@
   exports.tooltip = tooltip;
   exports.transformation = toTransformation;
   exports.version = version;
-  exports.videoOverlay = videoOverlay;
   var oldL = window.atlas;
   /*exports.noConflict = function() {
 	window.atlas = oldL;
