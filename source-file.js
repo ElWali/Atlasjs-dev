@@ -8344,10 +8344,4 @@
   exports.tooltip = tooltip;
   exports.transformation = toTransformation;
   exports.version = version;
-  /*var oldL = window.atlas;
-  /*exports.noConflict = function() {
-	window.atlas = oldL;
-	return this;
-  }*/
-  /*window.atlas = exports;*/
 }));
