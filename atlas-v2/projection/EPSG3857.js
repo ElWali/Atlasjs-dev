@@ -24,6 +24,12 @@ class EPSG3857 {
     return this.transformation.transform(projectedPoint, scale);
   }
 
+  unprojectFromPixel(pixelPoint, zoom) {
+    const scale = this.scale(zoom);
+    const untransformedPoint = this.transformation.untransform(pixelPoint, scale);
+    return this.unproject(untransformedPoint);
+  }
+
   // The following methods will be part of the ProjectionSystem
   // and will be moved there later.
   scale(zoom) {
