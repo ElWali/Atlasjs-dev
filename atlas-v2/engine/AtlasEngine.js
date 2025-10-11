@@ -4,6 +4,11 @@ import ViewportManager from '../viewport/ViewportManager.js';
 import SurfaceManager from '../surfaces/SurfaceManager.js';
 import RenderPipeline from '../rendering/RenderPipeline.js';
 import EPSG3857 from '../projection/EPSG3857.js';
+import InteractionManager from '../interaction/InteractionManager.js';
+import DragPan from '../interaction/DragPan.js';
+import ScrollWheelZoom from '../interaction/ScrollWheelZoom.js';
+import WidgetSystem from '../widgets/WidgetSystem.js';
+import ZoomWidget from '../widgets/ZoomWidget.js';
 
 class AtlasEngine {
   constructor(containerId, options = {}) {
@@ -19,8 +24,19 @@ class AtlasEngine {
     this.viewport = new ViewportManager(this);
     this.surfaces = new SurfaceManager(this);
     this.renderPipeline = new RenderPipeline(this);
+    this.widgets = new WidgetSystem(this);
+    this.interaction = new InteractionManager(this);
 
-    // ... more initialization to come
+    // Add default widgets and behaviors
+    this.widgets.add(new ZoomWidget(this));
+    this.interaction.add(new DragPan(this), 'dragPan');
+    this.interaction.add(new ScrollWheelZoom(this), 'scrollWheelZoom');
+
+    // Enable default behaviors
+    this.interaction.enable('dragPan');
+    this.interaction.enable('scrollWheelZoom');
+
+    this.interaction._initEvents();
   }
 }
 
