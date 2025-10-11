@@ -1,3 +1,6 @@
+import PixelPoint from '../geometry/PixelPoint.js';
+import { toGeoPoint } from '../geometry/GeoPoint.js';
+
 class ViewportManager {
   constructor(engine) {
     this.engine = engine;
@@ -32,6 +35,20 @@ class ViewportManager {
   panBy(offset) {
     // Logic to pan the map by a certain pixel offset will go here.
     console.log(`Panning by: ${offset}`);
+  }
+
+  getPixelOrigin() {
+    const center = this.stateManager.get('viewport.center');
+    const zoom = this.stateManager.get('viewport.zoom');
+    const projection = this.engine.projection;
+    const pixelPoint = projection.projectToPixel(toGeoPoint(center), zoom);
+    const viewHalf = this.getSize().divideBy(2);
+    return pixelPoint.subtract(viewHalf).round();
+  }
+
+  getSize() {
+    const container = this.engine.container;
+    return new PixelPoint(container.clientWidth, container.clientHeight);
   }
 }
 
