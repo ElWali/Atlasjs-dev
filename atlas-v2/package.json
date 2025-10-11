@@ -1,0 +1,15 @@
+{
+  "name": "atlas.js-v2",
+  "version": "0.0.1",
+  "description": "A lightweight JavaScript library for mobile-friendly interactive maps (v2 refactor)",
+  "main": "engine/AtlasEngine.js",
+  "module": "engine/AtlasEngine.js",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "devDependencies": {
+    "rollup": "^2.0.0",
+    "rollup-plugin-terser": "^7.0.0"
+  }
+}
