@@ -4,10 +4,17 @@ export default {
   input: 'index.js',
   output: [
     {
-      file: '../jules-scratch/verification/atlas.v2.bundle.js',
+      file: 'dist/atlas-v2.js',
       format: 'umd',
       name: 'atlas',
       sourcemap: true,
+    },
+    {
+      file: 'dist/atlas-v2.min.js',
+      format: 'umd',
+      name: 'atlas',
+      sourcemap: true,
+      plugins: [terser()],
     },
   ],
 };

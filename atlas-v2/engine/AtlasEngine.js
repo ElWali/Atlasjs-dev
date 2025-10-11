@@ -21,7 +21,7 @@ class AtlasEngine {
     this.stateManager = new StateManager();
     this.commandBus = new CommandBus();
     this.projection = options.projection || new EPSG3857();
-    this.viewport = new ViewportManager(this);
+    this.viewport = new ViewportManager(this, options);
     this.surfaces = new SurfaceManager(this);
     this.renderPipeline = new RenderPipeline(this);
     this.widgets = new WidgetSystem(this);

@@ -1,14 +1,15 @@
 import { toGeoPoint } from '../geometry/GeoPoint.js';
 import PixelPoint from '../geometry/PixelPoint.js';
+import Area from '../geometry/Area.js';
 
 class ViewportManager {
-  constructor(engine) {
+  constructor(engine, options = {}) {
     this.engine = engine;
     this.stateManager = engine.stateManager;
 
     // Initialize viewport state
-    this.stateManager.set('viewport.center', [0, 0]);
-    this.stateManager.set('viewport.zoom', 1);
+    this.stateManager.set('viewport.center', options.center || [0, 0]);
+    this.stateManager.set('viewport.zoom', options.zoom || 1);
   }
 
   navigateTo({ center, zoom }) {
@@ -56,6 +57,11 @@ class ViewportManager {
   getSize() {
     const container = this.engine.container;
     return new PixelPoint(container.clientWidth, container.clientHeight);
+  }
+
+  getPixelBounds() {
+    const size = this.getSize();
+    return new Area([0, 0], [size.x, size.y]);
   }
 }
 
